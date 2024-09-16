@@ -1,6 +1,9 @@
 pipeline {
     agent any
-
+    tools {
+        maven 'HomeBrew Maven'
+        jdk 'jdk-20'
+    }
 
     stages {
         stage('Checkout') {
