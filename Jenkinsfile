@@ -1,42 +1,39 @@
-
 pipeline {
     agent any
     tools {
-        maven 'HomeBrew Maven'
-        jdk 'jdk-20'
+        maven 'HomeBrew Maven'  // Ensure Maven is installed
+        jdk 'jdk-20'     // Ensure JDK is installed
     }
-
     stages {
-        stage('Checkout') {
+        stage('Checkout Code') {
             steps {
                 git 'https://github.com/annagaom/TimeCalculator.git'
             }
         }
-
         stage('Build') {
             steps {
-                sh 'mvn clean install'
+                sh 'mvn clean package'
             }
         }
-
-        stage('Test') {
+        stage('Run Unit Tests') {
             steps {
                 sh 'mvn test'
             }
+            post {
+                always {
+                    junit 'target/surefire-reports/TEST-TimeCalculatorTest.xml'  // Capture test reports
+                }
+            }
         }
-
-        stage('Code Coverage') {
+        stage('Code Coverage Report') {
             steps {
-                jacoco execPattern: 'target/jacoco.exec'
+                sh 'mvn jacoco:report'
+            }
+            post {
+                always {
+                    jacoco execPattern: 'target/jacoco.exec'
+                }
             }
         }
     }
-
-    post {
-        always {
-            junit 'target/surefire-reports/TEST-TimeCalculatorTest.xml'
-            jacoco execPattern: 'target/jacoco.exec'
-        }
-    }
 }
-
