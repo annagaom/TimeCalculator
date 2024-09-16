@@ -30,8 +30,8 @@ pipeline {
 
     post {
         always {
-            junit '**/target/surefire-reports/TEST-TimeCalculatorTest.xml'
-            jacoco execPattern: '**/target/jacoco.exec'
+            junit 'target/surefire-reports/TEST-TimeCalculatorTest.xml'
+            jacoco execPattern: 'target/jacoco.exec'
         }
     }
 }
