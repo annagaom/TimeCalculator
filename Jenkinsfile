@@ -1,8 +1,8 @@
 pipeline {
     agent any
     tools {
-        maven 'HomeBrew Maven'
-        jdk 'jdk-20'
+        maven 'maven3'
+        jdk 'jdk-21'
     }
 
     stages {
